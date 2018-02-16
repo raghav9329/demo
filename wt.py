@@ -11,11 +11,10 @@ populated by the Sauce CI plugins.
 class testSauceWrappers(unittest.TestCase):
 
     def setUp(self):
-        desired_capabilities = {}
-        desired_capabilities['browserName'] = os.environ['SELENIUM_BROWSER']
-        desired_capabilities['version'] = os.getenv('SELENIUM_VERSION', '')
-        desired_capabilities['platform'] = os.environ['SELENIUM_PLATFORM']
-        command_executor = "http://%s:%s@%s:%s/wd/hub" % (os.environ['SAUCE_USER_NAME'], os.environ['SAUCE_API_KEY'], os.environ['SELENIUM_HOST'], os.environ['SELENIUM_PORT'])
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        command_executor='http://172.17.0.2:4444/wd/hub',
+        desired_capabilities=DesiredCapabilities.CHROME(chrome_options=options))
         self.driver = webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=command_executor)
 
 
